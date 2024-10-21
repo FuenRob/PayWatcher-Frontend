@@ -7,31 +7,36 @@ import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'LoginView',
+  name: 'RegisterView',
   components: {
     ButtonComponent,
     InputComponent,
     TitleComponent
   },
   setup() {
-    const identity = ref('')
+    const name = ref('')
+    const email = ref('')
+    const username = ref('')
     const password = ref('')
     const errorMessage = ref('')
     const router = useRouter()
 
-    const login = async () => {
+    const register = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch('http://localhost:3000/api/user', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ identity: identity.value, password: password.value })
+          body: JSON.stringify({
+            name: name.value,
+            email: email.value,
+            username: username.value,
+            password: password.value
+          })
         })
         if (response.ok) {
-          const res = await response.json()
-          localStorage.setItem('token', res.data)
-          router.push('/')
+          router.push('/login')
         } else {
           errorMessage.value = 'Invalid username or password'
         }
@@ -40,10 +45,12 @@ export default defineComponent({
       }
     }
     return {
-      identity,
+      name,
+      email,
+      username,
       password,
       errorMessage,
-      login
+      register
     }
   }
 })
@@ -52,9 +59,11 @@ export default defineComponent({
 /** template */
 <template>
   <main>
-    <TitleComponent title="Login" />
-    <form @submit.prevent="login">
-      <InputComponent label="Username or Email" id="identity" name="identity" v-model="identity" />
+    <TitleComponent title="Register" />
+    <form @submit.prevent="register">
+      <InputComponent label="Nombre" id="name" name="name" v-model="name" />
+      <InputComponent label="Dirección de correo" id="email" name="email" v-model="email" />
+      <InputComponent label="Usuario" id="username" name="username" v-model="username" />
       <InputComponent
         label="Password"
         id="password"
@@ -62,7 +71,7 @@ export default defineComponent({
         type="password"
         v-model="password"
       />
-      <ButtonComponent label="Login" type="submit" />
+      <ButtonComponent label="register" type="submit" />
     </form>
     <p v-if="errorMessage">{{ errorMessage }}</p>
   </main>

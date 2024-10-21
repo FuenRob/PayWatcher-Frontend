@@ -1,14 +1,18 @@
 <script lang="ts">
+import TitleComponent from '@/components/TitleComponent.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'DashboardView'
+  name: 'DashboardView',
+  components: {
+    TitleComponent
+  }
 })
 </script>
 
 <template>
   <main>
-    <h1>Dashboard</h1>
+    <TitleComponent title="Dashboard" />
     <p>Welcome to the dashboard</p>
   </main>
 </template>
