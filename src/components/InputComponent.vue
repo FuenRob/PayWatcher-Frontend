@@ -20,10 +20,16 @@ export default defineComponent({
       type: String,
       required: true
     },
-    value: {
+    modelValue: {
       type: String,
       default: '',
       required: false
+    }
+  },
+  emits: ['update:modelValue'],
+  methods: {
+    onInput(event: Event) {
+      this.$emit('update:modelValue', (event.target as HTMLInputElement).value)
     }
   }
 })
@@ -32,6 +38,14 @@ export default defineComponent({
 <template>
   <div>
     <label :for="id">{{ label }}</label>
-    <input :type="type" :id="id" :name="name" :value="value" required />
+    <input
+      class="form-control mb-3 mt-1 border border-2 border-primary"
+      :type="type"
+      :id="id"
+      :name="name"
+      :value="modelValue"
+      @input="onInput"
+      required
+    />
   </div>
 </template>
