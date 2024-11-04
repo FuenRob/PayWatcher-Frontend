@@ -5,6 +5,9 @@ import RegisterView from '@/views/RegisterView.vue'
 import CreateCategoryView from '@/views/category/CreateCategoryView.vue'
 import UpdateCategoryView from '@/views/category/UpdateCategoryView.vue'
 import ListCategoriesView from '@/views/category/ListCategoriesView.vue'
+import ListPaymentView from '@/views/payment/ListPaymentView.vue'
+import CreatePaymentView from '@/views/payment/CreatePaymentView.vue'
+import UpdatePaymentView from '@/views/payment/UpdatePaymentView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +51,30 @@ const router = createRouter({
       path: '/categories/:id/edit',
       name: 'edit-category',
       component: UpdateCategoryView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/payments/',
+      name: 'payments',
+      component: ListPaymentView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/payments/create',
+      name: 'create-payment',
+      component: CreatePaymentView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/payments/:id/edit',
+      name: 'edit-payment',
+      component: UpdatePaymentView,
       meta: {
         requiresAuth: true
       }
