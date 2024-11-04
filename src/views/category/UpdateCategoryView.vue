@@ -15,13 +15,14 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id
     const name = ref('')
     const priority = ref(1)
     const recurrent = ref(true)
     const notify = ref(true)
     const statusMessage = ref('')
 
-    const getCategoryById = async (id: string) => {
+    const getCategoryById = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/category/${id}`, {
           method: 'GET',
@@ -47,7 +48,7 @@ export default defineComponent({
 
     const updateCategory = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/categories', {
+        const response = await fetch(`http://localhost:3000/api/categories${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -55,9 +56,9 @@ export default defineComponent({
           },
           body: JSON.stringify({
             name: name.value,
-            priority: priority.value,
-            recurrent: recurrent.value,
-            notify: notify.value
+            priority: Number(priority.value),
+            recurrent: Boolean(recurrent.value),
+            notify: Boolean(notify.value)
           })
         })
         if (response.ok) {
@@ -73,8 +74,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      const categoryId = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id
-      getCategoryById(categoryId)
+      getCategoryById()
       console.log('Component is mounted')
     })
 

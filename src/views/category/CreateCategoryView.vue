@@ -21,7 +21,7 @@ export default defineComponent({
 
     const createCategory = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/category', {
+        const response = await fetch('http://localhost:3000/api/category/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -29,9 +29,9 @@ export default defineComponent({
           },
           body: JSON.stringify({
             name: name.value,
-            priority: priority.value,
-            recurrent: recurrent.value,
-            notify: notify.value
+            priority: Number(priority.value),
+            recurrent: Boolean(recurrent.value),
+            notify: Boolean(notify.value)
           })
         })
         if (response.ok) {
@@ -63,7 +63,13 @@ export default defineComponent({
     <TitleComponent title="Create Category" />
     <form @submit.prevent="createCategory">
       <InputComponent label="Name" id="name" name="name" v-model="name" />
-      <InputComponent label="Priority" id="priority" name="priority" v-model="priority" />
+      <InputComponent
+        label="Priority"
+        id="priority"
+        name="priority"
+        type="number"
+        v-model="priority"
+      />
       <InputComponent
         label="Recurrent"
         id="recurrent"
