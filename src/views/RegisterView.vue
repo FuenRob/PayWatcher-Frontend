@@ -58,23 +58,38 @@ export default defineComponent({
 
 /** template */
 <template>
-  <main>
-    <TitleComponent title="Register" />
-    <form @submit.prevent="register">
-      <InputComponent label="Nombre" id="name" name="name" v-model="name" />
-      <InputComponent label="Dirección de correo" id="email" name="email" v-model="email" />
-      <InputComponent label="Usuario" id="username" name="username" v-model="username" />
+  <main class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <TitleComponent title="Register" class="text-4xl font-bold mb-8" />
+    <form @submit.prevent="register" class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <InputComponent label="Nombre" id="name" name="name" v-model="name" class="mb-4" />
       <InputComponent
-        label="Password"
+        label="Dirección de correo"
+        id="email"
+        name="email"
+        v-model="email"
+        class="mb-4"
+      />
+      <InputComponent
+        label="Usuario"
+        id="username"
+        name="username"
+        v-model="username"
+        class="mb-4"
+      />
+      <InputComponent
+        label="Contraseña"
         id="password"
         name="password"
         type="password"
         v-model="password"
+        class="mb-4"
       />
-      <ButtonComponent label="register" type="submit" />
+      <ButtonComponent
+        label="Registro"
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+      />
     </form>
-    <p v-if="errorMessage">{{ errorMessage }}</p>
+    <p v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</p>
   </main>
 </template>
-
-/** Style */

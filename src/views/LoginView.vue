@@ -13,7 +13,7 @@ export default defineComponent({
     InputComponent,
     TitleComponent
   },
-  setup() {
+  setup(_, { emit }) {
     const identity = ref('')
     const password = ref('')
     const errorMessage = ref('')
@@ -31,6 +31,7 @@ export default defineComponent({
         if (response.ok) {
           const res = await response.json()
           localStorage.setItem('token', res.data)
+          emit('login') // Emit the login event
           router.push('/')
         } else {
           errorMessage.value = 'Invalid username or password'
@@ -51,20 +52,26 @@ export default defineComponent({
 
 /** template */
 <template>
-  <main>
-    <TitleComponent title="Login" />
-    <form @submit.prevent="login">
-      <InputComponent label="Username or Email" id="identity" name="identity" v-model="identity" />
-      <InputComponent
-        label="Password"
-        id="password"
-        name="password"
-        type="password"
-        v-model="password"
-      />
-      <ButtonComponent label="Login" type="submit" />
-    </form>
-    <p v-if="errorMessage">{{ errorMessage }}</p>
+  <main class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <TitleComponent title="Login" class="text-4xl font-bold mb-8" />
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <form @submit.prevent="login" class="space-y-6">
+        <InputComponent label="Usuario o Email" id="identity" name="identity" v-model="identity" />
+        <InputComponent
+          label="Contraseña"
+          id="password"
+          name="password"
+          type="password"
+          v-model="password"
+        />
+        <ButtonComponent
+          label="Entrar"
+          type="submit"
+          class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+        />
+      </form>
+      <p v-if="errorMessage" class="mt-4 text-red-600">{{ errorMessage }}</p>
+    </div>
   </main>
 </template>
 

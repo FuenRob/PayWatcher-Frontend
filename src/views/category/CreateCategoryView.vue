@@ -4,6 +4,7 @@ import { defineComponent, ref } from 'vue'
 import TitleComponent from '@/components/TitleComponent.vue'
 import InputComponent from '@/components/InputComponent.vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'CreateCategoryView',
@@ -14,10 +15,11 @@ export default defineComponent({
   },
   setup() {
     const name = ref('')
-    const priority = ref(1)
-    const recurrent = ref(true)
-    const notify = ref(true)
-    const statusMessage = ref('')
+    const priority = ref(0)
+    const recurrent = ref(false)
+    const notify = ref(false)
+    const errorMessage = ref('')
+    const router = useRouter()
 
     const createCategory = async () => {
       try {
@@ -35,22 +37,21 @@ export default defineComponent({
           })
         })
         if (response.ok) {
-          const res = await response.json()
-          statusMessage.value = 'Categoria creada con éxito'
-          console.log(res)
+          router.push('/categories')
         } else {
-          console.log('Error')
+          errorMessage.value = 'Failed to create category'
         }
       } catch (error) {
-        console.log(error)
+        errorMessage.value = 'An error occurred'
       }
     }
+
     return {
       name,
       priority,
       recurrent,
       notify,
-      statusMessage,
+      errorMessage,
       createCategory
     }
   }
@@ -59,29 +60,39 @@ export default defineComponent({
 
 /** Template */
 <template>
-  <main>
-    <TitleComponent title="Create Category" />
-    <form @submit.prevent="createCategory">
-      <InputComponent label="Name" id="name" name="name" v-model="name" />
-      <InputComponent
-        label="Priority"
-        id="priority"
-        name="priority"
-        type="number"
-        v-model="priority"
-      />
-      <InputComponent
-        label="Recurrent"
-        id="recurrent"
-        name="recurrent"
-        type="checkbox"
-        v-model="recurrent"
-      />
-      <InputComponent label="Notify" id="notify" name="notify" type="checkbox" v-model="notify" />
-      <ButtonComponent label="Create" type="submit" />
-    </form>
-    <p>{{ statusMessage }}</p>
+  <main class="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <TitleComponent title="Crear Categoria" class="text-4xl font-bold mb-8" />
+      <form @submit.prevent="createCategory" class="space-y-6">
+        <InputComponent label="Nombre" id="name" name="name" v-model="name" />
+        <InputComponent
+          label="Prioridad"
+          id="priority"
+          name="priority"
+          type="number"
+          v-model="priority"
+        />
+        <InputComponent
+          label="¿Recurrente?"
+          id="recurrent"
+          name="recurrent"
+          type="checkbox"
+          v-model="recurrent"
+        />
+        <InputComponent
+          label="¿Notificar?"
+          id="notify"
+          name="notify"
+          type="checkbox"
+          v-model="notify"
+        />
+        <ButtonComponent
+          label="Crear"
+          type="submit"
+          class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+        />
+      </form>
+      <p v-if="errorMessage" class="mt-4 text-red-600">{{ errorMessage }}</p>
+    </div>
   </main>
 </template>
-
-/** Styles */

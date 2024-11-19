@@ -13,5 +13,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">{{ title }}</h1>
+  <h1 class="text-4xl font-extrabold text-gray-800 tracking-wide leading-tight">{{ title }}</h1>
 </template>

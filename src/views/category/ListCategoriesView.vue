@@ -74,39 +74,76 @@ export default defineComponent({
 </script>
 /** Template */
 <template>
-  <main>
-    <TitleComponent title="List Categories" />
-    <router-link to="/categories/create">Create Category</router-link>
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Priority</th>
-            <th>Recurrent</th>
-            <th>Notify</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="category in listCategories" :key="category.id">
-            <td>{{ category.id }}</td>
-            <td>{{ category.name }}</td>
-            <td>{{ category.priority }}</td>
-            <td>{{ category.recurrent }}</td>
-            <td>{{ category.notify }}</td>
-            <td>
-              <router-link :to="{ name: 'edit-category', params: { id: category.id } }">
-                Edit
-              </router-link>
-              <button @click="deleteCategory(category.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="min-h-screen bg-gray-100 p-8">
+    <div class="container mx-auto">
+      <div class="bg-white p-8 rounded-lg shadow-lg">
+        <TitleComponent title="Categorias" class="text-4xl font-bold mb-8" />
+        <div class="mb-4">
+          <router-link
+            to="/categories/create"
+            class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600"
+          >
+            Crear categoria
+          </router-link>
+        </div>
+        <table class="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th
+                class="py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                ID
+              </th>
+              <th
+                class="py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Nombre
+              </th>
+              <th
+                class="py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Prioridad
+              </th>
+              <th
+                class="py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Recurrente
+              </th>
+              <th
+                class="py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              >
+                Notificar
+              </th>
+              <th
+                class="py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+              ></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="category in listCategories" :key="category.id" class="border-t">
+              <td class="py-2 px-4">{{ category.id }}</td>
+              <td class="py-2 px-4">{{ category.name }}</td>
+              <td class="py-2 px-4">{{ category.priority }}</td>
+              <td class="py-2 px-4">{{ category.recurrent }}</td>
+              <td class="py-2 px-4">{{ category.notify }}</td>
+              <td class="py-2 px-4">
+                <router-link
+                  :to="{ name: 'edit-category', params: { id: category.id } }"
+                  class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
+                >
+                  Editar
+                </router-link>
+                <button
+                  class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 ml-2"
+                  @click="deleteCategory(category.id)"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </main>
+  </div>
 </template>
-
-/** Styles */

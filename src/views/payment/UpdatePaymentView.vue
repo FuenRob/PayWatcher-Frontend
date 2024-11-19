@@ -125,40 +125,53 @@ export default defineComponent({
 
 // Template
 <template>
-  <main>
-    <TitleComponent title="Actualizar Pago" />
-    <form @submit.prevent="updatePayment">
-      <InputComponent label="Name" id="name" name="name" v-model="name" />
-      <InputComponent label="Category" id="category" name="category" v-model="category_id" />
-      <InputComponent label="Net Amount" id="net_amount" name="net_amount" v-model="net_amount" />
-      <InputComponent
-        label="Gross Amount"
-        id="gross_amount"
-        name="gross_amount"
-        v-model="gross_amount"
-      />
-      <InputComponent label="Deductible" id="deductible" name="deductible" v-model="deductible" />
-      <InputComponent
-        label="Charge Date"
-        id="charge_date"
-        name="charge_date"
-        v-model="charge_date"
-      />
-      <InputComponent
-        label="Recurrent"
-        id="recurrent"
-        name="recurrent"
-        type="checkbox"
-        v-model="recurrent"
-      />
-      <InputComponent
-        label="Payment Type"
-        id="payment_type"
-        name="payment_type"
-        v-model="payment_type"
-      />
-      <InputComponent label="Paid" id="paid" name="paid" type="checkbox" v-model="paid" />
-      <ButtonComponent type="submit" label="Actualizar" />
-    </form>
+  <main class="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <TitleComponent title="Actualizar Pago" class="text-4xl font-bold mb-8" />
+      <form @submit.prevent="updatePayment" class="space-y-6">
+        <InputComponent label="Nombre" id="name" name="name" v-model="name" />
+        <!-- TODO: Create component Select -->
+        <InputComponent
+          label="Categoria"
+          id="category_id"
+          name="category_id"
+          type="number"
+          v-model="category_id"
+        />
+        <InputComponent label="Total Neto" id="net_amount" name="net_amount" v-model="net_amount" />
+        <InputComponent
+          label="Total Bruto"
+          id="gross_amount"
+          name="gross_amount"
+          v-model="gross_amount"
+        />
+        <InputComponent label="Deducible" id="deductible" name="deductible" v-model="deductible" />
+        <InputComponent
+          label="Fecha del cargo"
+          id="charge_date"
+          name="charge_date"
+          v-model="charge_date"
+        />
+        <InputComponent
+          label="¿Recurrente?"
+          id="recurrent"
+          name="recurrent"
+          type="checkbox"
+          v-model="recurrent"
+        />
+        <InputComponent
+          label="Tipo de Pago"
+          id="payment_type"
+          name="payment_type"
+          v-model="payment_type"
+        />
+        <InputComponent label="¿Pagado?" id="paid" name="paid" type="checkbox" v-model="paid" />
+        <ButtonComponent
+          type="submit"
+          label="Actualizar"
+          class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+        />
+      </form>
+    </div>
   </main>
 </template>

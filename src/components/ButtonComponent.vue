@@ -17,5 +17,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <button :type="type">{{ label }}</button>
+  <button
+    class="bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
+    :type="type"
+  >
+    {{ label }}
+  </button>
 </template>

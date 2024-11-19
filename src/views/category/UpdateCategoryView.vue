@@ -20,7 +20,7 @@ export default defineComponent({
     const priority = ref(1)
     const recurrent = ref(true)
     const notify = ref(true)
-    const statusMessage = ref('')
+    const errorMessage = ref('')
 
     const getCategoryById = async () => {
       try {
@@ -48,7 +48,7 @@ export default defineComponent({
 
     const updateCategory = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/categories${id}`, {
+        const response = await fetch(`http://localhost:3000/api/category/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -62,9 +62,7 @@ export default defineComponent({
           })
         })
         if (response.ok) {
-          const res = await response.json()
-          statusMessage.value = 'Categoria editada con éxito'
-          console.log(res)
+          errorMessage.value = 'Categoria editada con éxito'
         } else {
           console.log('Error')
         }
@@ -83,7 +81,7 @@ export default defineComponent({
       priority,
       recurrent,
       notify,
-      statusMessage,
+      errorMessage,
       updateCategory
     }
   }
@@ -92,14 +90,39 @@ export default defineComponent({
 
 /** Template */
 <template>
-  <main>
-    <TitleComponent title="Editar categoría" />
-    <form @submit.prevent="updateCategory">
-      <InputComponent label="name" id="name" name="name" v-model="name" />
-      <InputComponent label="priority" id="priority" name="priority" v-model="priority" />
-      <InputComponent label="recurrent" id="recurrent" name="recurrent" v-model="recurrent" />
-      <InputComponent label="notify" id="notify" name="notify" v-model="notify" />
-      <ButtonComponent label="Update" type="submit" />
-    </form>
+  <main class="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <TitleComponent title="Actualizar categoria" class="text-4xl font-bold mb-8" />
+      <form @submit.prevent="updateCategory" class="space-y-6">
+        <InputComponent label="Nombre" id="name" name="name" v-model="name" />
+        <InputComponent
+          label="Prioridad"
+          id="priority"
+          name="priority"
+          type="number"
+          v-model="priority"
+        />
+        <InputComponent
+          label="¿Recurrente?"
+          id="recurrent"
+          name="recurrent"
+          type="checkbox"
+          v-model="recurrent"
+        />
+        <InputComponent
+          label="¿Notificar?"
+          id="notify"
+          name="notify"
+          type="checkbox"
+          v-model="notify"
+        />
+        <ButtonComponent
+          label="Update"
+          type="submit"
+          class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+        />
+      </form>
+      <p v-if="errorMessage" class="mt-4 text-red-600">{{ errorMessage }}</p>
+    </div>
   </main>
 </template>
